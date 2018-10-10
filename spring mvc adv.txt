@@ -51,7 +51,7 @@ Works on the lifecycle of a spring application
 
 9) spring form : form : modelAttribute/commandName ====
 
-10) DelegatingFilterProxy: filter in spring
+10) DelegatingFilterProxy: to add filter to spring context
 //Syllabus : advanced
 //
 
