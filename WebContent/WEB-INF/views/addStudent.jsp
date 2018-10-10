@@ -12,6 +12,9 @@
 </head>
 <body>
 <form:form class="form-inline" action="./addStudent" method="post" modelAttribute="student">
+<br>
+<a href="addStudent?language=en">English</a>
+<a href="addStudent?language=pt">Portugese</a>
   <div class="form-group mb-2">
     <label for="name" class="sr-only" >
     <tag:message code="name"></tag:message>

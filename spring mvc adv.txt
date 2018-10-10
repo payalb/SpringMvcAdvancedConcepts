@@ -1,0 +1,63 @@
+1) Asynchronous processing: 
+by not ur main thread
+
+2) Internationalization == Multilingual support ===
+
+request ==> accept: text/html
+accept-language : en/ pt
+response: n
+
+a) Create various property files for diff locales: 
+login.properties: default
+login_en.properties: english
+login_pt.properties: portguese
+
+b) ResourceBundleMessageSource: resolving the property file based on a particular locale
+
+c) tags taglib: spring
+
+d) LocaleResolver: cookie/session
+
+e) LocaleChangeInterceptor: param name instead of accept-language
+
+accept-language | header : browser
+postman: /addStudent : accept-language : pt
+/displayStudent: default
+session/cookie
+
+LocaleResolver
+SessionLocaleResolver
+CookieLocaleResolver
+
+
+link: language
+
+3) Custom Validations: Spring ===
+
+4) Interceptors (spring) =~ Filter servlet ===
+Works on the lifecycle of a spring application
+		preHandle
+==> request ==>Interceptor==> Controller ==>Interceptor==>  ViewResolver ==>Interceptor==>  view page 
+
+==> request ==> filter ==> servlet ==> filter ==> response
+
+5) Exception Handling ===
+
+6) web.xml -> java config : methods: mapping without writing ur own controller ===
+
+7) ContextConfigLocation: ContextLoaderListener
+
+8) HandlerExceptionResolver
+
+9) spring form : form : modelAttribute/commandName ====
+
+10) DelegatingFilterProxy: filter in spring
+//Syllabus : advanced
+//
+
+classNotFoundException: Class.forName("com.
+
+| ClassDefNotFoundError??
+
+
+
