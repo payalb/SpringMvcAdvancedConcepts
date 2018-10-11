@@ -2,15 +2,13 @@ package com.java.controller;
 
 import java.util.concurrent.Callable;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.request.async.DeferredResult;
+import org.springframework.web.context.request.async.WebAsyncTask;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.java.dto.Student;
@@ -61,13 +59,24 @@ public class StudentController  {
 		return longTask;
 	}*/
 	
-	@RequestMapping(path= {"/addStudent"},  method=RequestMethod.POST)
+/*	@RequestMapping(path= {"/addStudent"},  method=RequestMethod.POST)
 	public Callable<String> doWork(@ModelAttribute("student") Student student, HttpServletRequest request) throws DatabaseException {
 		System.out.println(Thread.currentThread().getName()+"**Thread name"); 
 		//Should pull therad from our executor
 		Callable<String> longTask= ()->{
 			return addStudent1(student);
 		};
+		return longTask;
+	}*/
+	
+	@RequestMapping(path= {"/addStudent"},  method=RequestMethod.POST)
+	public WebAsyncTask<String> doWork(@ModelAttribute("student") Student student) throws DatabaseException {
+		System.out.println(Thread.currentThread().getName()+"**Thread name"); 
+		//Should pull thread from our executor
+		WebAsyncTask<String> longTask= new WebAsyncTask<>(()->{
+			return addStudent1(student);
+		});
+		longTask.onError(()->{ throw new DatabaseException("Exception occured!");});
 		return longTask;
 	}
 /*	

@@ -36,3 +36,9 @@ Meanwhile, the DispatcherServlet and all filters exit the Servlet container thre
 Eventually the Callable produces a result, and Spring MVC dispatches the request back to the Servlet container to complete processing.
 
 The DispatcherServlet is invoked again, and processing resumes with the asynchronously produced return value from the Callable.
+
+HandlerInterceptor instances can be of type AsyncHandlerInterceptor, to receive the afterConcurrentHandlingStarted callback on the initial request that starts asynchronous processing (instead of postHandle and afterCompletion).
+
+HandlerInterceptor implementations can also register a CallableProcessingInterceptor or a DeferredResultProcessingInterceptor, to integrate more deeply with the lifecycle of an asynchronous request (for example, to handle a timeout event). See AsyncHandlerInterceptor for more details.
+
+DeferredResult provides onTimeout(Runnable) and onCompletion(Runnable) callbacks. See the Javadoc of DeferredResult for more details. Callable can be substituted for WebAsyncTask that exposes additional methods for timeout and completion callbacks.
