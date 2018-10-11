@@ -1,6 +1,7 @@
 package com.java.config;
 
 import java.util.Locale;
+import java.util.concurrent.Executor;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,6 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.task.AsyncTaskExecutor;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -22,7 +26,7 @@ import com.java.exception.CustomTimeoutInterceptor;
 import com.java.util.DatabaseUtil;
 import com.java.util.MyInterceptor;
 
-@Import({ DatabaseUtil.class, FlywayConfig.class })
+@Import({ DatabaseUtil.class, FlywayConfig.class , SpringExceptionConfig.class})
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.java")
@@ -32,6 +36,17 @@ public class SpringConfig implements WebMvcConfigurer {
 	 * converters, validation support, message converters, exception handling
 	 */
 	
+	 @Bean
+     public AsyncTaskExecutor getAsyncExecutor() {
+         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+         executor.setCorePoolSize(7);
+         executor.setMaxPoolSize(42);
+         executor.setQueueCapacity(11);
+         executor.setThreadNamePrefix("MyExecutor-");
+         executor.initialize();
+         return executor;
+     }
+
 	@Bean("localeChangeInterceptor")
 	public LocaleChangeInterceptor getLocaleChangeInterceptor() {
 		LocaleChangeInterceptor interceptor= new LocaleChangeInterceptor();
@@ -71,6 +86,7 @@ public class SpringConfig implements WebMvcConfigurer {
 	public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
 		configurer.setDefaultTimeout(30000);
 		configurer.registerCallableInterceptors(new CustomTimeoutInterceptor());
+		configurer.setTaskExecutor(getAsyncExecutor());
 	}
 
 	@Override

@@ -14,8 +14,6 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import com.java.util.AuthenticationFilter;
-
 //Don't use @Configuration
 //Equivalent of web.xml
 
@@ -31,9 +29,6 @@ public class WebConfig implements WebApplicationInitializer{
 		Dynamic servletOne=servletContext.addServlet("myServlet", new DispatcherServlet());
 		servletOne.addMapping("/");
 		servletOne.setAsyncSupported(true);
-		//servletOne.setInitParameter("contextConfigLocation", arg1)
-		//1st request comes in : object of servlet : init() method
-		//As soon as ur application is deployed: create the objects, call the init()
 		servletOne.setLoadOnStartup(1);
 		
 		FilterRegistration.Dynamic filter=servletContext.addFilter("authFilter", new DelegatingFilterProxy("authFilter"));

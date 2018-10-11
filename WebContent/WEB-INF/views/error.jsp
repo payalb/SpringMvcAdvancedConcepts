@@ -9,7 +9,9 @@
 <body>
 
 Something went wrong!!!!!<br>
-
+<h3>This is example exception page</h3>
+ <p>Exception: <b>${exceptionType}</b></p>
+ <p>Handler method: <b> ${handlerMethod} </b></p>
 ${message}
 </body>
 </html>
